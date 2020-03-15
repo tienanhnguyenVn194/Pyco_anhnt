@@ -1,10 +1,45 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/src/data/model/user_info.dart';
+import 'package:flutter_app/src/feature/media/mediaPresenter.dart';
 
 class Profile extends StatefulWidget {
   _Profile createState() => _Profile();
 }
 
-class _Profile extends State<Profile> {
+class _Profile extends State<Profile> implements Controls {
+
+  GlobalKey<ScaffoldState> _globalKey = new GlobalKey<ScaffoldState>();
+  BuildContext _context;
+  MediaPresenter _presenter;
+  User people;
+  bool _isViewDetails = false;
+  bool _isNetworkConnected = true;
+  int _selectedIndex = 0;
+
+
+  @override
+  void initState() {
+    super.initState();
+    _isNetworkConnected = true;
+    _isViewDetails = false;
+    _selectedIndex = 0;
+    _presenter.nextPeople();
+  }
+
+  Widget NoNetworkConnected = Center(
+    child: Padding(
+      padding: EdgeInsets.only(left: 16.0, right: 16.0),
+      child: Center(
+        child: Text(
+          "Lỗi kết nối mạng, vui lòng mở kết nối mạng hoặc thử mở lại trang",
+          textScaleFactor: 2.0,
+          textAlign: TextAlign.center,
+        ),
+      ),
+    ),
+  );
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -16,6 +51,7 @@ class _Profile extends State<Profile> {
       ],
     );
   }
+
 
   Widget backgroundView() {
     double widthScreen = MediaQuery.of(context).size.width;
@@ -171,7 +207,7 @@ class _Profile extends State<Profile> {
                     padding: EdgeInsets.all(5),
                     child: CircleAvatar(
                       radius: widthScreen / 5,
-                      backgroundImage: NetworkImage('https://picsum.photos/250?image=9'),
+                      backgroundImage: NetworkImage(people.picture),
                     ),
                   )
               )
@@ -179,5 +215,33 @@ class _Profile extends State<Profile> {
         ],
       ),
     );
+  }
+
+  void getPeople() {}
+
+  void viewDetails() {
+    setState(() {
+      _isViewDetails = true;
+    });
+  }
+
+  @override
+  void showFavoritePeople() {
+    Navigator.of(_context).pushNamed("/favorite");
+  }
+
+  @override
+  void showPeople(User user) {
+    setState(() {
+      _isNetworkConnected = true;
+      people = user;
+    });
+  }
+
+  @override
+  void showError(String error) {
+    setState(() {
+      _isNetworkConnected = false;
+    });
   }
 }

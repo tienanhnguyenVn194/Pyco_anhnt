@@ -19,6 +19,11 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  font_awesome_flutter: ^8.7.0
+  cached_network_image: ^2.0.0
+  swipedetector: ^1.2.0
+  path_provider: ^1.6.1
+  sqflite: any
 
 
   # The following adds the Cupertino Icons font to your application.
