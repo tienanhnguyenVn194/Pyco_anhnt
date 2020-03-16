@@ -1,57 +1,70 @@
-import 'package:cached_network_image/cached_network_image.dart';
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_app/src/data/model/user_info.dart';
 import 'package:flutter_app/src/feature/media/mediaPresenter.dart';
+import 'package:http/http.dart' as http;
 
 class Profile extends StatefulWidget {
   _Profile createState() => _Profile();
 }
 
-class _Profile extends State<Profile> implements Controls {
-
+class _Profile extends State<Profile> {
   GlobalKey<ScaffoldState> _globalKey = new GlobalKey<ScaffoldState>();
   BuildContext _context;
   MediaPresenter _presenter;
   User people;
-  bool _isViewDetails = false;
-  bool _isNetworkConnected = true;
-  int _selectedIndex = 0;
 
-
-  @override
-  void initState() {
-    super.initState();
-    _isNetworkConnected = true;
-    _isViewDetails = false;
-    _selectedIndex = 0;
-    _presenter.nextPeople();
+  Future<http.Response> fetchAlbum() {
+    return http.get('https://randomuser.me/api/0.4/?randomapi');
   }
 
-  Widget NoNetworkConnected = Center(
-    child: Padding(
-      padding: EdgeInsets.only(left: 16.0, right: 16.0),
-      child: Center(
-        child: Text(
-          "Lỗi kết nối mạng, vui lòng mở kết nối mạng hoặc thử mở lại trang",
-          textScaleFactor: 2.0,
-          textAlign: TextAlign.center,
-        ),
-      ),
-    ),
-  );
+  Future<User> getUser() async {
+    String url = 'https://quotes.rest/qod.json';
+    final response =
+        await http.get(url, headers: {"Accept": "application/json"});
+
+    if (response.statusCode == 200) {
+      return User.fromJson(json.decode(response.body));
+    } else {
+      throw Exception('Failed to load post');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return Stack(
-      alignment: Alignment.center,
-      children: <Widget>[
-        backgroundView(),
-        MainCard(),
-      ],
+    return MaterialApp(
+      title: 'Tinder',
+      theme: ThemeData(
+        primaryColor: Colors.blue,
+      ),
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('Tinder'),
+        ),
+        body: Center(
+          child: FutureBuilder<User>(
+            future: getUser(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return Stack(
+                  alignment: Alignment.center,
+                  children: <Widget>[
+                    backgroundView(),
+                    MainCard(),
+                  ],
+                );
+              } else if (snapshot.hasError) {
+                return Text('errors');
+              }
+              return CircularProgressIndicator();
+            },
+          ),
+        ),
+      ),
     );
   }
-
 
   Widget backgroundView() {
     double widthScreen = MediaQuery.of(context).size.width;
@@ -199,7 +212,8 @@ class _Profile extends State<Profile> implements Controls {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(200),
                     border: Border.all(
-                      color: Colors.black12, //                   <--- border color
+                      color:
+                          Colors.black12, //                   <--- border color
                       width: 1.0,
                     ),
                   ),
@@ -209,39 +223,9 @@ class _Profile extends State<Profile> implements Controls {
                       radius: widthScreen / 5,
                       backgroundImage: NetworkImage(people.picture),
                     ),
-                  )
-              )
-          ),
+                  ))),
         ],
       ),
     );
-  }
-
-  void getPeople() {}
-
-  void viewDetails() {
-    setState(() {
-      _isViewDetails = true;
-    });
-  }
-
-  @override
-  void showFavoritePeople() {
-    Navigator.of(_context).pushNamed("/favorite");
-  }
-
-  @override
-  void showPeople(User user) {
-    setState(() {
-      _isNetworkConnected = true;
-      people = user;
-    });
-  }
-
-  @override
-  void showError(String error) {
-    setState(() {
-      _isNetworkConnected = false;
-    });
   }
 }

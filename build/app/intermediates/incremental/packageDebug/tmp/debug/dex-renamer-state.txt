@@ -1,4 +1,4 @@
-#Mon Mar 16 01:09:20 ICT 2020
-base.0=C\:\\Users\\Admin\\Pyco_anhnt\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\out\\classes.dex
+#Mon Mar 16 12:42:00 ICT 2020
+base.0=C\:\\Users\\AnhNT\\Pyco_anhnt\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\out\\classes.dex
 path.0=classes.dex
 renamed.0=classes.dex

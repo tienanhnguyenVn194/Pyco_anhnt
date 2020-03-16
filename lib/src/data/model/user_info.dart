@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:flutter_app/src/data/model/Name.dart';
 import 'package:flutter_app/src/data/model/location.dart';
 
-
 class User {
   int id;
   String gender;
@@ -23,8 +22,30 @@ class User {
   String SSN;
   String picture;
 
-  User(this.gender, this.name, this.location, this.email, this.username,
-      this.password, this.phone, this.cell, this.SSN, this.picture);
+  User(
+      {this.gender,
+      this.name,
+      this.location,
+      this.email,
+      this.username,
+      this.password,
+      this.phone,
+      this.cell,
+      this.SSN,
+      this.picture});
+
+  factory User.fromJson(Map<String, dynamic> json) {
+    return User(
+        gender: json['gender'],
+        name: json['name'],
+        location: json['location'],
+        email: json['email'],
+        username: json['username'],
+        password: json['password'],
+        cell: json['cell'],
+        SSN: json['SSN'],
+        picture: json['picture']);
+  }
 
   User.fromMap(Map<String, dynamic> map)
       : this.gender = map["gender"],
@@ -48,7 +69,7 @@ class User {
       : this.gender = map["gender"],
         this.name = Name.fromMap(json.decode(map["name"].toString())),
         this.location =
-        Location.fromMap(json.decode(map["location"].toString())),
+            Location.fromMap(json.decode(map["location"].toString())),
         this.email = map["email"],
         this.username = map["username"],
         this.password = map["password"],
