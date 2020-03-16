@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/src/feature/favorite/view.dart';
 import 'package:flutter_app/src/feature/media/userInfoView.dart';
 
 void main() => runApp(MyApp());
 
 final routes = {
-  '/': (BuildContext context) => new Profile(),
+  '/user': (BuildContext context) => new Profile(),
+  '/favorited': (BuildContext context) => new DataSave(),
 };
 
 class MyApp extends StatelessWidget {
@@ -14,7 +16,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Tinder',
       routes: routes,
-      initialRoute: '/',
+      initialRoute: '/user',
     );
   }
 }

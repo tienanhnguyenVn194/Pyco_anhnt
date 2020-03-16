@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/src/data/model/user_info.dart';
 import 'package:flutter_app/src/feature/media/mediaPresenter.dart';
@@ -85,8 +86,37 @@ class _Profile extends State<Profile> implements Controls {
                         child: DefaultTabController(
                           length: 5,
                           child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisAlignment: MainAxisAlignment.end,
                             children: <Widget>[
+                              SizedBox(
+                                height: 30,
+                              ),
+                              Container(
+                                constraints: BoxConstraints.expand(height: 100),
+                                child: TabBarView(
+                                  children: <Widget>[
+                                    TabInfo(
+                                        "My name is",
+                                        people != null
+                                            ? "${people.name.title} ${people.name.first} ${people.name.last}"
+                                            : ""),
+                                    TabInfo("My SSN is",
+                                        people != null ? people.SSN : ""),
+                                    TabInfo(
+                                        "My address is",
+                                        people != null
+                                            ? "${people.location.street} - ${people.location.city} - ${people.location.state}"
+                                            : ""),
+                                    TabInfo(
+                                        "My phone is",
+                                        people != null
+                                            ? "${people.phone}  ${people.cell}"
+                                            : ""),
+                                    TabInfo("My password is",
+                                        people != null ? people.password : ""),
+                                  ],
+                                ),
+                              ),
                               Container(
                                 constraints: BoxConstraints.expand(height: 100),
                                 child: Column(
@@ -95,32 +125,6 @@ class _Profile extends State<Profile> implements Controls {
                                   children: <Widget>[
                                     SizedBox(
                                       height: 30,
-                                    ),
-                                    TabBarView(
-                                      children: <Widget>[
-                                        TabInfo(
-                                            "My name is",
-                                            people != null
-                                                ? "${people.name.title} ${people.name.first} ${people.name.last}"
-                                                : ""),
-                                        TabInfo("My SSN is",
-                                            people != null ? people.SSN : ""),
-                                        TabInfo(
-                                            "My address is",
-                                            people != null
-                                                ? "${people.location.street} - ${people.location.city} - ${people.location.state}"
-                                                : ""),
-                                        TabInfo(
-                                            "My phone is",
-                                            people != null
-                                                ? "${people.phone} - or ${people.cell}"
-                                                : ""),
-                                        TabInfo(
-                                            "My password is",
-                                            people != null
-                                                ? people.password
-                                                : ""),
-                                      ],
                                     ),
                                     Container(
                                       constraints:
@@ -186,64 +190,6 @@ class _Profile extends State<Profile> implements Controls {
                                   ],
                                 ),
                               ),
-                              Container(
-                                constraints: BoxConstraints.expand(height: 50),
-                                padding: EdgeInsets.only(left: 60, right: 60),
-                                child: TabBar(
-                                    indicator: UnderlineTabIndicator(
-                                      borderSide: BorderSide(
-                                          color: Colors.green, width: 3.0),
-                                      insets: EdgeInsets.fromLTRB(
-                                          40.0, 0.0, 40.0, 40.0),
-                                    ),
-                                    onTap: (index) {
-                                      setState(() {
-                                        _selectedIndex = index;
-                                      });
-                                    },
-                                    tabs: [
-                                      Tab(
-                                        icon: Icon(
-                                          Icons.person_pin,
-                                          color: _selectedIndex == 0
-                                              ? Colors.green
-                                              : Colors.grey,
-                                        ),
-                                      ),
-                                      Tab(
-                                        icon: Icon(
-                                          Icons.calendar_today,
-                                          color: _selectedIndex == 1
-                                              ? Colors.green
-                                              : Colors.grey,
-                                        ),
-                                      ),
-                                      Tab(
-                                        icon: Icon(
-                                          Icons.map,
-                                          color: _selectedIndex == 2
-                                              ? Colors.green
-                                              : Colors.grey,
-                                        ),
-                                      ),
-                                      Tab(
-                                        icon: Icon(
-                                          Icons.phone,
-                                          color: _selectedIndex == 3
-                                              ? Colors.green
-                                              : Colors.grey,
-                                        ),
-                                      ),
-                                      Tab(
-                                        icon: Icon(
-                                          Icons.lock,
-                                          color: _selectedIndex == 4
-                                              ? Colors.green
-                                              : Colors.grey,
-                                        ),
-                                      ),
-                                    ]),
-                              ),
                             ],
                           ),
                         ),
@@ -281,9 +227,10 @@ class _Profile extends State<Profile> implements Controls {
           child: Column(
             children: <Widget>[
               Container(
-                  color: Color.fromRGBO(44, 45, 50, 1),
-                  width: widthScreen,
-                  height: heightScreen / 3),
+                width: widthScreen,
+                height: heightScreen / 3,
+                child: loadImage,
+              ),
             ],
           ),
           color: Color.fromRGBO(249, 249, 249, 1),
@@ -311,7 +258,10 @@ class _Profile extends State<Profile> implements Controls {
           backgroundColor: Colors.blue,
           actions: <Widget>[
             IconButton(
-                icon: Icon(Icons.favorite), onPressed: showFavoritePeople),
+                icon: Icon(Icons.people),
+                onPressed: () {
+                  Navigator.pushNamed(context, '/favorited');
+                }),
           ],
         ),
         body: NoNetworkConnected,
@@ -325,7 +275,10 @@ class _Profile extends State<Profile> implements Controls {
           backgroundColor: Colors.blue,
           actions: <Widget>[
             IconButton(
-                icon: Icon(Icons.favorite), onPressed: showFavoritePeople),
+                icon: Icon(Icons.people),
+                onPressed: () {
+                  Navigator.pushNamed(context, '/favorited');
+                }),
           ],
         ),
         body: Center(
@@ -373,11 +326,6 @@ class _Profile extends State<Profile> implements Controls {
     setState(() {
       _isNetworkConnected = false;
     });
-  }
-
-  @override
-  void showFavoritePeople() {
-    Navigator.of(_context).pushNamed("/favorite");
   }
 
   @override

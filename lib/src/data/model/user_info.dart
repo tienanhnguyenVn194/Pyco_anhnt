@@ -11,12 +11,6 @@ class User {
   String email;
   String username;
   String password;
-  String salt;
-  String md5;
-  String sha1;
-  String sha256;
-  String registered;
-  String dob;
   String phone;
   String cell;
   String SSN;
@@ -34,19 +28,6 @@ class User {
       this.SSN,
       this.picture});
 
-  factory User.fromJson(Map<String, dynamic> json) {
-    return User(
-        gender: json['gender'],
-        name: json['name'],
-        location: json['location'],
-        email: json['email'],
-        username: json['username'],
-        password: json['password'],
-        cell: json['cell'],
-        SSN: json['SSN'],
-        picture: json['picture']);
-  }
-
   User.fromMap(Map<String, dynamic> map)
       : this.gender = map["gender"],
         this.name = Name.fromMap(map["name"]),
@@ -54,12 +35,6 @@ class User {
         this.email = map["email"],
         this.username = map["username"],
         this.password = map["password"],
-        this.salt = map["salt"],
-        this.md5 = map["md5"],
-        this.sha1 = map["sha1"],
-        this.sha256 = map["sha256"],
-        this.registered = map["registered"],
-        this.dob = map["dob"],
         this.phone = map["phone"],
         this.cell = map["cell"],
         this.SSN = map["SSN"],
@@ -73,12 +48,6 @@ class User {
         this.email = map["email"],
         this.username = map["username"],
         this.password = map["password"],
-        this.salt = map["salt"],
-        this.md5 = map["md5"],
-        this.sha1 = map["sha1"],
-        this.sha256 = map["sha256"],
-        this.registered = map["registered"],
-        this.dob = map["dob"],
         this.phone = map["phone"],
         this.cell = map["cell"],
         this.SSN = map["SSN"],
@@ -92,11 +61,6 @@ class User {
     map["email"] = email;
     map["username"] = username;
     map["password"] = password;
-    map["salt"] = salt;
-    map["sha1"] = sha1;
-    map["sha256"] = sha256;
-    map["registered"] = registered;
-    map["dob"] = dob;
     map["phone"] = phone;
     map["cell"] = cell;
     map["SSN"] = SSN;
@@ -112,11 +76,6 @@ class User {
       "email": email,
       "username": username,
       "password": password,
-      "salt": salt,
-      "sha1": sha1,
-      "sha256": sha256,
-      "registered": registered,
-      "dob": dob,
       "phone": phone,
       "cell": cell,
       "SSN": SSN,

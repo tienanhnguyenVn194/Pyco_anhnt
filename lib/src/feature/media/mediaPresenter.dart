@@ -3,7 +3,6 @@ import 'package:flutter_app/src/data/model/user_info.dart';
 
 abstract class Controls {
   void showPeople(User user);
-  void showFavoritePeople();
   void showError(String message);
 }
 
