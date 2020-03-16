@@ -81,94 +81,172 @@ class _Profile extends State<Profile> implements Controls {
                     width: widthScreen - 16 * 2,
                     height: widthScreen * 2 / 3,
                     child: Card(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          SizedBox(
-                            height: 30,
-                          ),
-                          TabBarView(
+                      child: Container(
+                        child: DefaultTabController(
+                          length: 5,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
-                              TabInfo(
-                                  "My name is",
-                                  people != null
-                                      ? "${people.name.title} ${people.name.first} ${people.name.last}"
-                                      : ""),
-                              TabInfo("My SSN is",
-                                  people != null ? people.SSN : ""),
-                              TabInfo(
-                                  "My address is",
-                                  people != null
-                                      ? "${people.location.street} - ${people.location.city} - ${people.location.state}"
-                                      : ""),
-                              TabInfo(
-                                  "My phone is",
-                                  people != null
-                                      ? "${people.phone} - or ${people.cell}"
-                                      : ""),
-                              TabInfo("My password is",
-                                  people != null ? people.password : ""),
+                              Container(
+                                constraints: BoxConstraints.expand(height: 100),
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: <Widget>[
+                                    SizedBox(
+                                      height: 30,
+                                    ),
+                                    TabBarView(
+                                      children: <Widget>[
+                                        TabInfo(
+                                            "My name is",
+                                            people != null
+                                                ? "${people.name.title} ${people.name.first} ${people.name.last}"
+                                                : ""),
+                                        TabInfo("My SSN is",
+                                            people != null ? people.SSN : ""),
+                                        TabInfo(
+                                            "My address is",
+                                            people != null
+                                                ? "${people.location.street} - ${people.location.city} - ${people.location.state}"
+                                                : ""),
+                                        TabInfo(
+                                            "My phone is",
+                                            people != null
+                                                ? "${people.phone} - or ${people.cell}"
+                                                : ""),
+                                        TabInfo(
+                                            "My password is",
+                                            people != null
+                                                ? people.password
+                                                : ""),
+                                      ],
+                                    ),
+                                    Container(
+                                      constraints:
+                                          BoxConstraints.expand(height: 50),
+                                      padding:
+                                          EdgeInsets.only(left: 60, right: 60),
+                                      child: TabBar(
+                                          indicator: UnderlineTabIndicator(
+                                            borderSide: BorderSide(
+                                                color: Colors.green,
+                                                width: 3.0),
+                                            insets: EdgeInsets.fromLTRB(
+                                                40.0, 0.0, 40.0, 40.0),
+                                          ),
+                                          onTap: (index) {
+                                            setState(() {
+                                              _selectedIndex = index;
+                                            });
+                                          },
+                                          tabs: [
+                                            Tab(
+                                              icon: Icon(
+                                                Icons.person_pin,
+                                                color: _selectedIndex == 0
+                                                    ? Colors.green
+                                                    : Colors.grey,
+                                              ),
+                                            ),
+                                            Tab(
+                                              icon: Icon(
+                                                Icons.calendar_today,
+                                                color: _selectedIndex == 1
+                                                    ? Colors.green
+                                                    : Colors.grey,
+                                              ),
+                                            ),
+                                            Tab(
+                                              icon: Icon(
+                                                Icons.map,
+                                                color: _selectedIndex == 2
+                                                    ? Colors.green
+                                                    : Colors.grey,
+                                              ),
+                                            ),
+                                            Tab(
+                                              icon: Icon(
+                                                Icons.phone,
+                                                color: _selectedIndex == 3
+                                                    ? Colors.green
+                                                    : Colors.grey,
+                                              ),
+                                            ),
+                                            Tab(
+                                              icon: Icon(
+                                                Icons.lock,
+                                                color: _selectedIndex == 4
+                                                    ? Colors.green
+                                                    : Colors.grey,
+                                              ),
+                                            ),
+                                          ]),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                constraints: BoxConstraints.expand(height: 50),
+                                padding: EdgeInsets.only(left: 60, right: 60),
+                                child: TabBar(
+                                    indicator: UnderlineTabIndicator(
+                                      borderSide: BorderSide(
+                                          color: Colors.green, width: 3.0),
+                                      insets: EdgeInsets.fromLTRB(
+                                          40.0, 0.0, 40.0, 40.0),
+                                    ),
+                                    onTap: (index) {
+                                      setState(() {
+                                        _selectedIndex = index;
+                                      });
+                                    },
+                                    tabs: [
+                                      Tab(
+                                        icon: Icon(
+                                          Icons.person_pin,
+                                          color: _selectedIndex == 0
+                                              ? Colors.green
+                                              : Colors.grey,
+                                        ),
+                                      ),
+                                      Tab(
+                                        icon: Icon(
+                                          Icons.calendar_today,
+                                          color: _selectedIndex == 1
+                                              ? Colors.green
+                                              : Colors.grey,
+                                        ),
+                                      ),
+                                      Tab(
+                                        icon: Icon(
+                                          Icons.map,
+                                          color: _selectedIndex == 2
+                                              ? Colors.green
+                                              : Colors.grey,
+                                        ),
+                                      ),
+                                      Tab(
+                                        icon: Icon(
+                                          Icons.phone,
+                                          color: _selectedIndex == 3
+                                              ? Colors.green
+                                              : Colors.grey,
+                                        ),
+                                      ),
+                                      Tab(
+                                        icon: Icon(
+                                          Icons.lock,
+                                          color: _selectedIndex == 4
+                                              ? Colors.green
+                                              : Colors.grey,
+                                        ),
+                                      ),
+                                    ]),
+                              ),
                             ],
                           ),
-                          Container(
-                            constraints: BoxConstraints.expand(height: 50),
-                            padding: EdgeInsets.only(left: 60, right: 60),
-                            child: TabBar(
-                                indicator: UnderlineTabIndicator(
-                                  borderSide: BorderSide(
-                                      color: Colors.green, width: 3.0),
-                                  insets: EdgeInsets.fromLTRB(
-                                      40.0, 0.0, 40.0, 40.0),
-                                ),
-                                onTap: (index) {
-                                  setState(() {
-                                    _selectedIndex = index;
-                                  });
-                                },
-                                tabs: [
-                                  Tab(
-                                    icon: Icon(
-                                      Icons.person_pin,
-                                      color: _selectedIndex == 0
-                                          ? Colors.green
-                                          : Colors.grey,
-                                    ),
-                                  ),
-                                  Tab(
-                                    icon: Icon(
-                                      Icons.calendar_today,
-                                      color: _selectedIndex == 1
-                                          ? Colors.green
-                                          : Colors.grey,
-                                    ),
-                                  ),
-                                  Tab(
-                                    icon: Icon(
-                                      Icons.map,
-                                      color: _selectedIndex == 2
-                                          ? Colors.green
-                                          : Colors.grey,
-                                    ),
-                                  ),
-                                  Tab(
-                                    icon: Icon(
-                                      Icons.phone,
-                                      color: _selectedIndex == 3
-                                          ? Colors.green
-                                          : Colors.grey,
-                                    ),
-                                  ),
-                                  Tab(
-                                    icon: Icon(
-                                      Icons.lock,
-                                      color: _selectedIndex == 4
-                                          ? Colors.green
-                                          : Colors.grey,
-                                    ),
-                                  ),
-                                ]),
-                          ),
-                        ],
+                        ),
                       ),
                     ),
                   )
